@@ -29,6 +29,4 @@ router.get("/:id", async (req, res) => {
   res.json(product);
 });
 
-router;
-
 module.exports = router;

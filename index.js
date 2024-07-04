@@ -23,4 +23,8 @@ app.use("/products", productRoutes);
 
 console.log(process.env.APP_ENV);
 
-app.listen(8080, () => console.log("Server listening on port 8080"));
+require("./db")()
+  .then(() =>
+    app.listen(8080, () => console.log("Server listening on port 8080"))
+  )
+  .catch(console.log);
