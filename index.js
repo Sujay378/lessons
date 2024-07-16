@@ -4,6 +4,7 @@ const path = require("node:path");
 require("dotenv").config({ path: path.join(require.main.path, ".env") });
 const express = require("express");
 
+const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
 
 const app = express();
@@ -19,6 +20,7 @@ app.get("/home", async (_, res) => {
   res.send(html.replace("{{header}}", "Header Test"));
 });
 
+app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
 
 console.log(process.env.APP_ENV);
