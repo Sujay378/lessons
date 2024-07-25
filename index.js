@@ -6,6 +6,7 @@ const express = require("express");
 
 const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
+const orderRoutes = require("./routes/order.routes");
 
 const app = express();
 
@@ -22,8 +23,7 @@ app.get("/home", async (_, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
-
-console.log(process.env.APP_ENV);
+app.use("/orders", orderRoutes);
 
 require("./db")()
   .then(() =>
