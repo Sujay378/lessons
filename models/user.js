@@ -34,6 +34,7 @@ const userSchema = new Schema(
         message: "Please provide a valid password",
       },
     },
+    passwordModifiedAt: { type: Types.Date, default: Date.now() },
   },
   {
     timestamps: true,
@@ -43,6 +44,7 @@ const userSchema = new Schema(
 userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 10);
+    this.passwordModifiedAt = Date.now();
   }
   next();
 });

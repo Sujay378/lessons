@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
@@ -45,12 +46,19 @@ router.post("/login", async (req, res) => {
         message: "Given email or password is wrong",
       });
 
-    res.json({
-      id: candidate.id,
-      firstName: candidate.firstName,
-      lastName: candidate.lastName,
-      email: candidate.email,
-    });
+    res
+      .setHeader(
+        "Authorization",
+        jwt.sign({ id: candidate.id }, process.env.JWT_SECRET, {
+          expiresIn: "1h", // 60 * 60 * 1000 miliseconds
+        })
+      )
+      .json({
+        id: candidate.id,
+        firstName: candidate.firstName,
+        lastName: candidate.lastName,
+        email: candidate.email,
+      });
   } catch (error) {
     console.log(error);
   }

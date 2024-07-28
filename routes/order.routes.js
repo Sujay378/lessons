@@ -5,9 +5,10 @@ const Order = require("../models/order");
 router
   .route("/")
   .get(async (_req, res) => {
-    const orders = await Order.find()
-      .populate("products", "_id title description price rating thumbnail")
-      .populate("user", "-password");
+    const orders = await Order.find().populate([
+      { path: "products", select: "title" },
+      { path: "user" },
+    ]);
     res.json({
       data: orders,
     });
